@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mr's Pancake · Pedidos en línea</title>
+  <link rel="icon" href="img/mascota.webp">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Kaushan+Script&family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div id="vista-cliente" class="vista">
+  <header class="barra">
+    <div class="barra-in">
+      <div class="marca">
+        <img class="marca-icono" src="img/mascota.webp" alt="" width="200" height="176">
+        <span class="marca-texto">
+          <span class="marca-nombre">Mr's Pancake</span>
+          <span class="marca-sub">Pedidos en línea · Atlacomulco</span>
+        </span>
+      </div>
+      <button type="button" class="boton-barra" data-accion="ir-carrito" id="c-ir-carrito">
+        Tu pedido: <span id="c-cuenta">0</span> · <span id="c-total-barra">$0</span>
+      </button>
+    </div>
+  </header>
+  <p class="franja-prototipo">Prototipo escolar: los pedidos que se hacen aquí son de prueba.</p>
+
+  <section class="portada" aria-labelledby="c-titulo-portada">
+    <div class="contenedor portada-in">
+      <img class="portada-logo" src="img/logo.webp" alt="Logo de Mr. Pancake: el hogar del hot cake" width="520" height="598">
+      <div class="portada-texto">
+        <h1 id="c-titulo-portada">Pide sin llamar</h1>
+        <p>Elige tus mini pancakes, crepas, alimentos y bebidas, personalízalos y recoge en el local o recibe a domicilio.
+           Antes de pedir puedes ver los ingredientes de cada producto.</p>
+        <p class="estado-conexion" id="c-conexion" data-modo="conectando">Conectando…</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="contenedor">
+    <div class="cliente-cols">
+      <section class="cliente-menu" aria-labelledby="c-titulo-menu">
+        <h2 id="c-titulo-menu" class="oculto">Menú</h2>
+        <nav class="saltos" id="c-saltos" aria-label="Categorías del menú"></nav>
+        <div id="c-menu"><p class="vacio">Cargando menú…</p></div>
+      </section>
+
+      <aside class="cliente-carrito" id="c-carrito" aria-labelledby="c-titulo-carrito">
+        <div id="c-confirmacion" hidden></div>
+
+        <div class="caja">
+          <h2 id="c-titulo-carrito">Tu pedido</h2>
+          <div id="c-lineas"><p class="vacio">Tu carrito está vacío. Agrega algo del menú.</p></div>
+
+          <form id="c-form" novalidate hidden>
+            <fieldset>
+              <legend>Tus datos</legend>
+              <div class="campo">
+                <label for="c-nombre">Nombre</label>
+                <input id="c-nombre" name="nombre" autocomplete="name" maxlength="60" aria-describedby="c-nombre-error">
+                <p class="error-campo" id="c-nombre-error"></p>
+              </div>
+              <div class="campo">
+                <label for="c-telefono">Teléfono (10 dígitos)</label>
+                <input id="c-telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" aria-describedby="c-telefono-error">
+                <p class="error-campo" id="c-telefono-error"></p>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Entrega</legend>
+              <label class="opcion" for="c-tipo-recoger">
+                <input type="radio" name="tipo" value="recoger" id="c-tipo-recoger" checked> Recoger en el local
+              </label>
+              <label class="opcion" for="c-tipo-domicilio">
+                <input type="radio" name="tipo" value="domicilio" id="c-tipo-domicilio"> A domicilio
+              </label>
+              <div id="c-domicilio" hidden>
+                <div class="campo">
+                  <label for="c-calle">Calle y número</label>
+                  <input id="c-calle" name="calle" autocomplete="address-line1" maxlength="80" aria-describedby="c-calle-error">
+                  <p class="error-campo" id="c-calle-error"></p>
+                </div>
+                <div class="campo">
+                  <label for="c-colonia">Colonia</label>
+                  <input id="c-colonia" name="colonia" maxlength="60" aria-describedby="c-colonia-error">
+                  <p class="error-campo" id="c-colonia-error"></p>
+                </div>
+                <p class="nota">El costo de envío se confirma por teléfono.</p>
+              </div>
+            </fieldset>
+
+            <div class="campo">
+              <label for="c-notas">Notas para el negocio (opcional)</label>
+              <textarea id="c-notas" name="notas" rows="2" maxlength="200"></textarea>
+            </div>
+
+            <p class="error" id="c-error-envio" role="alert" hidden></p>
+            <button type="submit" class="boton boton-principal boton-ancho" id="c-enviar">Confirmar pedido</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p><strong>Mr's Pancake</strong> · el hogar del hot cake</p>
+      <p>Sistema de pedidos Rappidos · prototipo escolar de Administración de Proyectos Informáticos, UAEMex Atlacomulco. Los pedidos hechos aquí son de prueba.</p>
+    </div>
+  </footer>
+
+  <p class="aviso" id="c-aviso" role="status" aria-live="polite" hidden></p>
+</div>
+  <script src="js/util.js"></script>
+  <script src="js/datos-iniciales.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/cliente.js"></script>
+  <script>Cliente.iniciar();</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mr's Pancake · Panel del negocio</title>
+  <link rel="icon" href="img/mascota.webp">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Kaushan+Script&family=Lato:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div id="vista-negocio" class="vista">
+  <!-- Aquí irá el inicio de sesión por rol (actividad 5.4 de la EDT).
+       Por ahora el panel no pide usuario ni contraseña (riesgo R7). -->
+  <header class="barra">
+    <div class="barra-in">
+      <div class="marca">
+        <img class="marca-icono" src="img/mascota.webp" alt="" width="200" height="176">
+        <span class="marca-texto">
+          <span class="marca-nombre">Mr's Pancake</span>
+          <span class="marca-sub">Panel del negocio</span>
+        </span>
+      </div>
+      <a class="boton-barra" href="index.html">Ver página del cliente</a>
+    </div>
+    <div class="barra-in">
+      <nav class="pestanas" aria-label="Secciones del panel">
+        <button type="button" class="pestana" data-pestana="pedidos" aria-pressed="true">
+          Pedidos <span class="globo" id="n-cuenta-pendientes" hidden>0</span>
+        </button>
+        <button type="button" class="pestana" data-pestana="cocina" aria-pressed="false">Cocina</button>
+        <button type="button" class="pestana" data-pestana="menu" aria-pressed="false">Menú</button>
+        <button type="button" class="pestana" data-pestana="inventario" aria-pressed="false">
+          Inventario <span class="globo" id="n-cuenta-surtir" hidden>0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <p class="estado-conexion" id="n-conexion" data-modo="conectando">Conectando…</p>
+    <p class="error" id="n-error" role="alert" hidden></p>
+
+    <!-- Pestaña: Pedidos -->
+    <section id="n-pedidos" class="panel" aria-labelledby="n-titulo-pedidos">
+      <div class="encabezado-panel">
+        <h1 id="n-titulo-pedidos">Pedidos</h1>
+        <div class="filtros" role="group" aria-label="Mostrar pedidos">
+          <button type="button" class="filtro" data-filtro-pedidos="activos" aria-pressed="true">Activos</button>
+          <button type="button" class="filtro" data-filtro-pedidos="entregado" aria-pressed="false">Entregados</button>
+          <button type="button" class="filtro" data-filtro-pedidos="todos" aria-pressed="false">Todos</button>
+        </div>
+      </div>
+      <div id="n-lista-pedidos"><p class="vacio">Cargando pedidos…</p></div>
+    </section>
+
+    <!-- Pestaña: Cocina -->
+    <section id="n-cocina" class="panel" aria-labelledby="n-titulo-cocina" hidden>
+      <div class="encabezado-panel">
+        <h1 id="n-titulo-cocina">Cocina</h1>
+        <div class="filtros" role="group" aria-label="Sector de cocina">
+          <button type="button" class="filtro" data-sector="todos" aria-pressed="true">Todos</button>
+          <button type="button" class="filtro" data-sector="caliente" aria-pressed="false">Cocina caliente</button>
+          <button type="button" class="filtro" data-sector="bebidas" aria-pressed="false">Bebidas</button>
+          <button type="button" class="filtro" data-sector="postres" aria-pressed="false">Postres</button>
+        </div>
+      </div>
+      <p class="leyenda">
+        <span class="semaforo rojo">Pendiente</span>
+        <span class="semaforo amarillo">En preparación</span>
+        <span class="semaforo verde">Listo</span>
+        <span class="nota">Del más antiguo al más nuevo. Al marcar un pedido como listo se descuentan sus ingredientes del inventario.</span>
+      </p>
+      <div id="n-tablero" class="tablero"><p class="vacio">Cargando pedidos…</p></div>
+    </section>
+
+    <!-- Pestaña: Menú -->
+    <section id="n-menu" class="panel" aria-labelledby="n-titulo-menu" hidden>
+      <h1 id="n-titulo-menu">Menú</h1>
+      <p class="nota">Los cambios aparecen al instante en la página del cliente. Para poner una foto, copia el archivo a la carpeta <code>img/</code> y escribe su nombre, por ejemplo <code>img/espresso.jpg</code>.</p>
+
+      <form id="n-form-producto" class="caja" novalidate>
+        <h2>Agregar producto</h2>
+        <div class="rejilla-form">
+          <div class="campo">
+            <label for="n-nuevo-nombre">Nombre</label>
+            <input id="n-nuevo-nombre" maxlength="40">
+          </div>
+          <div class="campo">
+            <label for="n-nuevo-precio">Precio (pesos)</label>
+            <input id="n-nuevo-precio" type="number" min="0" step="1" inputmode="numeric">
+          </div>
+          <div class="campo">
+            <label for="n-nuevo-categoria">Categoría</label>
+            <select id="n-nuevo-categoria">
+              <option value="postres">Mini pancakes y postres</option>
+              <option value="comida">Alimentos</option>
+              <option value="frias">Bebidas frías</option>
+              <option value="calientes">Bebidas calientes</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="n-nuevo-sector">Sector de cocina</label>
+            <select id="n-nuevo-sector">
+              <option value="postres">Postres</option>
+              <option value="caliente">Cocina caliente</option>
+              <option value="bebidas">Bebidas</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="n-nuevo-imagen">Foto (opcional)</label>
+            <input id="n-nuevo-imagen" maxlength="80" placeholder="img/archivo.jpg">
+          </div>
+          <div class="campo campo-ancho">
+            <label for="n-nuevo-descripcion">Descripción corta (opcional)</label>
+            <input id="n-nuevo-descripcion" maxlength="100">
+          </div>
+        </div>
+        <p class="nota">La receta de un producto nuevo se captura en la base de datos (tablas <code>recetas</code> y <code>receta_elecciones</code>). Sin receta no muestra ingredientes ni descuenta inventario.</p>
+        <p class="error" id="n-form-error" role="alert" hidden></p>
+        <button type="submit" class="boton boton-principal" id="n-agregar">Agregar al menú</button>
+      </form>
+
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th scope="col">Foto</th>
+              <th scope="col">Producto y receta</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Sector</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Disponible</th>
+              <th scope="col"><span class="oculto">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody id="n-filas-menu">
+            <tr><td colspan="7" class="vacio">Cargando menú…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Pestaña: Inventario -->
+    <section id="n-inventario" class="panel" aria-labelledby="n-titulo-inventario" hidden>
+      <div class="encabezado-panel">
+        <h1 id="n-titulo-inventario">Inventario</h1>
+        <div class="filtros" role="group" aria-label="Mostrar insumos">
+          <button type="button" class="filtro" data-filtro-inv="todos" aria-pressed="true">Todos</button>
+          <button type="button" class="filtro" data-filtro-inv="surtir" aria-pressed="false">Por surtir</button>
+          <button type="button" class="filtro" data-filtro-inv="ingrediente" aria-pressed="false">Ingredientes</button>
+          <button type="button" class="filtro" data-filtro-inv="empaque" aria-pressed="false">Empaques</button>
+        </div>
+      </div>
+      <p class="nota">La existencia baja sola cuando cocina marca un pedido como <strong>Listo</strong>. Registra aquí las compras (entradas) y los conteos físicos (ajustes).</p>
+      <div id="n-inv-resumen" class="resumen-inv"></div>
+      <div class="campo campo-buscar">
+        <label for="n-inv-buscar">Buscar insumo</label>
+        <input id="n-inv-buscar" type="search" placeholder="Ej. leche, Nutella, vaso">
+      </div>
+      <div class="tabla-scroll">
+        <table class="tabla tabla-inventario">
+          <thead>
+            <tr>
+              <th scope="col">Insumo</th>
+              <th scope="col" class="num">Existencia</th>
+              <th scope="col">Mínimo</th>
+              <th scope="col">Costo por unidad</th>
+              <th scope="col" class="num">Valor</th>
+              <th scope="col">Estado</th>
+              <th scope="col"><span class="oculto">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody id="n-filas-inventario">
+            <tr><td colspan="7" class="vacio">Cargando inventario…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="dos-columnas">
+        <section class="caja" aria-labelledby="n-titulo-consumo">
+          <div class="encabezado-panel">
+            <h2 id="n-titulo-consumo">Gasto en materia prima</h2>
+            <label class="opcion" for="n-periodo">Periodo
+              <select id="n-periodo">
+                <option value="hoy">Hoy</option>
+                <option value="semana">Últimos 7 días</option>
+                <option value="todo">Todo</option>
+              </select>
+            </label>
+          </div>
+          <div id="n-consumo"></div>
+        </section>
+        <section class="caja" aria-labelledby="n-titulo-mov">
+          <h2 id="n-titulo-mov">Movimientos recientes</h2>
+          <div id="n-movimientos"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <p class="aviso" id="n-aviso" role="status" aria-live="polite" hidden></p>
+</div>
+  <script src="js/util.js"></script>
+  <script src="js/datos-iniciales.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/inventario.js"></script>
+  <script src="js/negocio.js"></script>
+  <script>Negocio.iniciar(location.hash.slice(1) || "pedidos");</script>
+</body>
+</html>
